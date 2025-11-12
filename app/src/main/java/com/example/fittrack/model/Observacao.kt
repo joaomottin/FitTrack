@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
             entity = Exercicio::class,
             parentColumns = ["id"],
             childColumns = ["exercicioId"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.Companion.CASCADE
         )
     ]
 )

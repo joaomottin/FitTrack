@@ -1,11 +1,17 @@
-package com.example.fittrack.model
+package com.example.fittrack.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
+import com.example.fittrack.model.Observacao
 
 @Dao
 interface ObservacaoDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insertObservacao(observacao: Observacao)
 
     @Update
