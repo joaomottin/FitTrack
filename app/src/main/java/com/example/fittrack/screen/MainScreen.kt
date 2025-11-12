@@ -12,7 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.fittrack.model.Treino
 import com.example.fittrack.viewmodel.TreinoViewModel
+import com.example.fittrack.api.ZenQuotesApi
 import kotlinx.coroutines.launch
+import kotlin.collections.get
+import com.example.fittrack.util.TranslatorHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,8 +29,25 @@ fun MainScreen(
     var quote by remember { mutableStateOf("Carregando frase...") }
 
     LaunchedEffect(Unit) {
-        quote = "Push yourself, because no one else is going to do it for you." // depois: API ZenQuotes
+        // carrega treinos
         treinoViewModel.carregarTreinos()
+
+        // busca quote aleatória da API ZenQuotes
+        try {
+            val api = ZenQuotesApi.create()
+            val response = api.getRandomQuote()
+            if (response.isNotEmpty()) {
+                val englishQuote = response[0].q
+                quote = try {
+                    TranslatorHelper.translateToPortuguese(englishQuote)
+                } catch (e: Exception) {
+                    // fallback para a frase em inglês caso a tradução falhe
+                    englishQuote
+                }
+            }
+        } catch (e: Exception) {
+            quote = "Push yourself, porque ninguém fará isso por você."
+        }
     }
 
     Scaffold(
