@@ -73,14 +73,16 @@ class MainActivity : ComponentActivity() {
                                 navController.navigate("exerciseList/${treino.id}")
                             },
                             onAddTreino = {
-                                // Exemplo: criar treino rápido (teste)
-                                treinoViewModel.adicionarTreino(
-                                    com.example.fittrack.model.Treino(
-                                        nome = "Treino Novo",
-                                        grupoMuscular = "Peito"
-                                    )
-                                )
+                                navController.navigate("addTreino")
                             }
+                        )
+                    }
+
+                    // ➕ Tela para adicionar treino
+                    composable("addTreino") {
+                        AddTreinoScreen(
+                            treinoViewModel = treinoViewModel,
+                            onBack = { navController.popBackStack() }
                         )
                     }
 
@@ -97,17 +99,21 @@ class MainActivity : ComponentActivity() {
                                 navController.navigate("exerciseDetails/${exercicio.id}")
                             },
                             onAddExercicio = {
-                                exercicioViewModel.adicionarExercicio(
-                                    com.example.fittrack.model.Exercicio(
-                                        treinoId = treinoId,
-                                        nome = "Supino Reto",
-                                        series = 4,
-                                        repeticoes = 10,
-                                        carga = 40f,
-                                        tempoDescanso = 60
-                                    )
-                                )
+                                navController.navigate("addExercicio/$treinoId")
                             },
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+
+                    // ➕ Tela para adicionar exercício
+                    composable(
+                        route = "addExercicio/{treinoId}",
+                        arguments = listOf(navArgument("treinoId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val treinoId = backStackEntry.arguments?.getInt("treinoId") ?: 0
+                        AddExercicioScreen(
+                            treinoId = treinoId,
+                            exercicioViewModel = exercicioViewModel,
                             onBack = { navController.popBackStack() }
                         )
                     }
