@@ -276,7 +276,6 @@ MainScreen (Lista de Treinos)
 app/src/main/java/com/example/fittrack/
 ├── api/
 │   ├── ZenQuotesApi.kt          # Interface Retrofit para API
-│   └── ZenQuotesApiService.kt
 ├── dao/
 │   ├── TreinoDao.kt             # DAO para Treinos
 │   ├── ExercicioDao.kt          # DAO para Exercícios
@@ -402,10 +401,11 @@ Este projeto foi desenvolvido para fins acadêmicos como trabalho da disciplina 
 ## 📞 Contato
 
 Para dúvidas ou sugestões sobre o projeto:
-- João Pedro Mezzadri Mottin - [joaopedro.mottin@exemplo.com]
-- Iago Mayer Bach - [iago.bach@exemplo.com]
+- João Pedro Mezzadri Mottin - [joao.mottin@proton.me]
+- Iago Mayer Bach - [mayerbachiago@gmail.com]
 
 ---
 
 **Desenvolvido com ❤️ por João Pedro e Iago**
+
 
