@@ -24,4 +24,12 @@ class TreinoRepository(private val treinoDao: TreinoDao) {
     suspend fun getTreinoById(id: Int): Treino? {
         return treinoDao.getTreinoById(id)
     }
+
+    suspend fun buscarTreinoPorNome(nome: String): List<Treino> {
+        return treinoDao.buscarTreinoPorNome(nome)
+    }
+
+    suspend fun buscarTreinoPorGrupoMuscular(grupoMuscular: String): List<Treino> {
+        return treinoDao.buscarTreinoPorGrupoMuscular(grupoMuscular)
+    }
 }

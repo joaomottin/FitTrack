@@ -39,4 +39,16 @@ class TreinoViewModel(private val repository: TreinoRepository) : ViewModel() {
             carregarTreinos()
         }
     }
+
+    fun buscarTreinoPorNome(nome: String) {
+        viewModelScope.launch {
+            _treinos.value = repository.buscarTreinoPorNome(nome)
+        }
+    }
+
+    fun buscarTreinoPorGrupoMuscular(grupoMuscular: String) {
+        viewModelScope.launch {
+            _treinos.value = repository.buscarTreinoPorGrupoMuscular(grupoMuscular)
+        }
+    }
 }

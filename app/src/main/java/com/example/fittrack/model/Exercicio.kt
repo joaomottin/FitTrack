@@ -23,5 +23,6 @@ data class Exercicio(
     val series: Int,
     val repeticoes: Int,
     val carga: Float,
-    val tempoDescanso: Int
+    val tempoDescanso: Int,
+    val concluido: Boolean = false
 )

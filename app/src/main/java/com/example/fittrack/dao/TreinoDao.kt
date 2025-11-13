@@ -25,4 +25,10 @@ interface TreinoDao {
 
     @Query("SELECT * FROM treinos WHERE id = :id")
     suspend fun getTreinoById(id: Int): Treino?
+
+    @Query("SELECT * FROM treinos WHERE nome LIKE '%' || :nome || '%'")
+    suspend fun buscarTreinoPorNome(nome: String): List<Treino>
+
+    @Query("SELECT * FROM treinos WHERE grupoMuscular LIKE '%' || :grupoMuscular || '%'")
+    suspend fun buscarTreinoPorGrupoMuscular(grupoMuscular: String): List<Treino>
 }

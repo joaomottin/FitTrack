@@ -9,7 +9,7 @@ import com.example.fittrack.dao.TreinoDao
 
 @Database(
     entities = [Treino::class, Exercicio::class, Observacao::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

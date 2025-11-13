@@ -25,4 +25,7 @@ interface ExercicioDao {
 
     @Query("SELECT * FROM exercicios WHERE id = :id")
     suspend fun getExercicioById(id: Int): Exercicio?
+
+    @Query("SELECT * FROM exercicios WHERE nome LIKE '%' || :nome || '%'")
+    suspend fun buscarExercicioPorNome(nome: String): List<Exercicio>
 }

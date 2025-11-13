@@ -36,7 +36,8 @@ class MainActivity : ComponentActivity() {
             applicationContext,
             AppDatabase::class.java,
             "fittrack_db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+         .build()
 
         // 🔹 Criando os repositories
         val treinoRepository = TreinoRepository(db.treinoDao())
@@ -74,6 +75,9 @@ class MainActivity : ComponentActivity() {
                             },
                             onAddTreino = {
                                 navController.navigate("addTreino")
+                            },
+                            onEditTreino = { treino ->
+                                navController.navigate("editTreino/${treino.id}")
                             }
                         )
                     }
@@ -84,6 +88,31 @@ class MainActivity : ComponentActivity() {
                             treinoViewModel = treinoViewModel,
                             onBack = { navController.popBackStack() }
                         )
+                    }
+
+                    // ✏️ Tela para editar treino
+                    composable(
+                        route = "editTreino/{treinoId}",
+                        arguments = listOf(navArgument("treinoId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val treinoId = backStackEntry.arguments?.getInt("treinoId") ?: 0
+                        val treinosState = treinoViewModel.treinos.collectAsState(initial = emptyList())
+                        val treino = treinosState.value.find { it.id == treinoId }
+
+                        if (treino != null) {
+                            EditTreinoScreen(
+                                treino = treino,
+                                treinoViewModel = treinoViewModel,
+                                onBack = { navController.popBackStack() }
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text("Treino não encontrado...")
+                            }
+                        }
                     }
 
                     // 💪 Tela de lista de exercícios
@@ -101,6 +130,9 @@ class MainActivity : ComponentActivity() {
                             onAddExercicio = {
                                 navController.navigate("addExercicio/$treinoId")
                             },
+                            onEditExercicio = { exercicio ->
+                                navController.navigate("editExercicio/${exercicio.id}")
+                            },
                             onBack = { navController.popBackStack() }
                         )
                     }
@@ -116,6 +148,31 @@ class MainActivity : ComponentActivity() {
                             exercicioViewModel = exercicioViewModel,
                             onBack = { navController.popBackStack() }
                         )
+                    }
+
+                    // ✏️ Tela para editar exercício
+                    composable(
+                        route = "editExercicio/{exercicioId}",
+                        arguments = listOf(navArgument("exercicioId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val exercicioId = backStackEntry.arguments?.getInt("exercicioId") ?: 0
+                        val exerciciosState = exercicioViewModel.exercicios.collectAsState(initial = emptyList())
+                        val exercicio = exerciciosState.value.find { it.id == exercicioId }
+
+                        if (exercicio != null) {
+                            EditExercicioScreen(
+                                exercicio = exercicio,
+                                exercicioViewModel = exercicioViewModel,
+                                onBack = { navController.popBackStack() }
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text("Exercício não encontrado...")
+                            }
+                        }
                     }
 
                     // 📋 Tela de detalhes do exercício

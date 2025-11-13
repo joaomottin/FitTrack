@@ -24,4 +24,8 @@ class ExercicioRepository(private val exercicioDao: ExercicioDao) {
     suspend fun getExercicioById(id: Int): Exercicio? {
         return exercicioDao.getExercicioById(id)
     }
+
+    suspend fun buscarExercicioPorNome(nome: String): List<Exercicio> {
+        return exercicioDao.buscarExercicioPorNome(nome)
+    }
 }

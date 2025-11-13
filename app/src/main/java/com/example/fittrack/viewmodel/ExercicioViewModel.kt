@@ -39,4 +39,18 @@ class ExercicioViewModel(private val repository: ExercicioRepository) : ViewMode
             carregarExercicios(exercicio.treinoId)
         }
     }
+
+    fun marcarComoConcluido(exercicio: Exercicio) {
+        viewModelScope.launch {
+            val exercicioAtualizado = exercicio.copy(concluido = !exercicio.concluido)
+            repository.updateExercicio(exercicioAtualizado)
+            carregarExercicios(exercicio.treinoId)
+        }
+    }
+
+    fun buscarExercicioPorNome(nome: String) {
+        viewModelScope.launch {
+            _exercicios.value = repository.buscarExercicioPorNome(nome)
+        }
+    }
 }
